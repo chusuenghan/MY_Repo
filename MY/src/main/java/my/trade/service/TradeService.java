@@ -8,4 +8,6 @@ public interface TradeService {
 	public int insertTrade(TradeVO trade);
 	public List<TradeVO> selectTradeList();
 	public TradeVO selectTrade(int tradeId);
+	public int updateTrade(TradeVO trade);
+	public int deleteTrade(int tradeId);
 }

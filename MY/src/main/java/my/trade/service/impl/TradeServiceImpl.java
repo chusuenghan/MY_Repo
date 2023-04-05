@@ -33,4 +33,13 @@ public class TradeServiceImpl implements TradeService{
 		return tradeDAO.selectTrade(tradeId);
 	}
 	
+	@Override
+	public int updateTrade(TradeVO trade){
+		return tradeDAO.updateTrade(trade);
+	}
+
+	@Override
+	public int deleteTrade(int tradeId){
+		return tradeDAO.deleteTrade(tradeId);
+	}
 }

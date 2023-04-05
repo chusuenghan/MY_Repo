@@ -25,4 +25,14 @@ public class TradeDAOImpl extends EgovAbstractMapper implements TradeDAO{
 	public TradeVO selectTrade(int tradeId) {
 		return selectOne("Trade.selectTrade", tradeId);
 	}
+	
+	@Override
+	public int updateTrade(TradeVO trade){
+		return update("Trade.updateTrade", trade);
+	}
+
+	@Override
+	public int deleteTrade(int tradeId){
+		return update("Trade.deleteTrade", tradeId);
+	}
 }
