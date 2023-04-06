@@ -68,7 +68,7 @@
 	</section>
 </body>
 <script>
-	function trDblClickEvent(boardId){
+	function trDblClickEvent(tradeId){
 		location.href="tradeInfoPage/"+ tradeId + ".do";
 	}
 </script>

@@ -45,22 +45,25 @@
 	
 	<update id="updateTrade" parameterType="tradeMap">
 		<![CDATA[
-			UPDATE tb_board
+			UPDATE trade_table
 			SET
-				title = #{title}, 
-				contents = #{contents}
+				title = #{title},
+				professor = #{professor}, 
+				contents = #{contents},
+				phone = #{phone},
+				price = #{price},
+				nowdate = NOW(),
+				image = #{image}
 			WHERE
-				board_id = #{boardId};
+				trade_id = #{tradeId};
 		]]>
 	</update>
 	
 	<update id="deleteTrade" parameterType="int">
 		<![CDATA[
-			UPDATE tb_board
-			SET
-				used = 'N'
+			DELETE FROM trade_table
 			WHERE
-				board_id = #{boardId};
+				trade_id = #{tradeId};
 		]]>
 	</update>
 </mapper>

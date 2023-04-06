@@ -14,6 +14,7 @@
 		<div style="display: flex;">
 			<%-- <h5>[${USER.name}]님 반갑습니다.</h5> --%>
 			<div style="margin: auto;">
+				<button type="button" onclick="window.location.href='main.do'">메인화면</button>
 				<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/main.do'">회원정보</button>
 				<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/logout.do'">로그아웃</button>
 			</div>
@@ -54,10 +55,10 @@
 		<br>
 		<button type="button" onclick="window.history.go(-1)">이전</button>
 		<input type="text" id="checking">
-		<%-- <c:if test="${board.writerId == USER.userId }">
+		<c:if test="${board.writerId == USER.userId }">
 			<button type="button" id="updateBtn">수정</button>
 			<button type="button" id="deleteBtn">삭제</button>
-		</c:if> --%>
+		</c:if>
 	</section>
 </body>
 <script>
@@ -68,7 +69,7 @@
 			alert("not match");
 		}
 		
-		/* var updateBtn = document.getElementById("updateBtn");
+		var updateBtn = document.getElementById("updateBtn");
 		
 		updateBtn.onclick = function(){
 			var path = "${pageContext.request.contextPath}/updateTradePage.do";
@@ -84,7 +85,8 @@
 			if(confirm("게시글을 삭제하시겠습니까?") == true){
 				var path = "${pageContext.request.contextPath}/tradeDelete.do";
 				var params = {
-						"tradeId" : "${trade.tradeId}"
+						"tradeId" : "${trade.tradeId}",
+						"image" : "${trade.image}"
 				}
 				post(path,params);
 			}
@@ -109,7 +111,7 @@
 			}
 		}
 		document.body.appendChild(form);
-		form.submit(); */
+		form.submit();
 	}
 </script>
 </html>

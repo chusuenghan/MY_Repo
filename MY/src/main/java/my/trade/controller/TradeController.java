@@ -68,8 +68,8 @@ public class TradeController {
 		return mav;
 	}
 	
-	@RequestMapping("/traedUpdatePage.do")
-	public ModelAndView tradeUpdatePage(int tradeId) throws Exception {
+	@RequestMapping("/updateTradePage.do")
+	public ModelAndView tradeUpdatePage(int tradeId){
 		ModelAndView mav = new ModelAndView("trade/tradeUpdate.jsp");
 		
 		TradeVO trade = tradeService.selectTrade(tradeId);
@@ -79,16 +79,32 @@ public class TradeController {
 	}
 	
 	@RequestMapping("/tradeUpdate.do")
-	public String tradeUpdate(@ModelAttribute TradeVO trade) throws Exception {
+	public String tradeUpdate(@ModelAttribute TradeVO trade) throws IOException {
+		// 파일 업로드 처리
+		String image=null;
+		MultipartFile uploadImage = trade.getUploadImage();
+		if (!uploadImage.isEmpty()) {
+			String originalFileName = uploadImage.getOriginalFilename();
+			UUID uuid = UUID.randomUUID();	
+			image=uuid+"_"+originalFileName;	
+					
+			uploadImage.transferTo(new File("E:\\uploads\\" + image));
+		}
+		trade.setImage(image);
+		
 		tradeService.updateTrade(trade);
 		
 		return "redirect:/tradeInfoPage/"+Integer.toString(trade.getTradeId())+".do";
 	}
 	
 	@RequestMapping("/tradeDelete.do")
-	public String tradeDelete(int tradeId) throws Exception {
+	public String tradeDelete(int tradeId, String image) throws IOException {
+		
 		tradeService.deleteTrade(tradeId);
 		
-		return "redirect:/boardListPage.do";
+		File fileDel = new File("E:\\uploads\\" + image);
+		fileDel.delete();
+		
+		return "redirect:/tradeListPage.do";
 	}
 }
