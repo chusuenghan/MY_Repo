@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Trade">
+
+	<resultMap type="tradeMap" id="TradeVO">
+		<id property="tradeId" 		column="trade_id"/>
+		<result property="title" 		column="title"/>
+		<result property="professor" 	column="professor"/>
+		<result property="contents" 	column="contents"/>
+		<result property="phone" 		column="phone" />
+		<result property="price" 	column="price"/>
+		<result property="nowdate" 	column="nowdate" />
+		<result property="pwd"	column="pwd" />
+		<result property="image"     column="image"/>
+	</resultMap>
+	
+	<select id="selectTradeList" resultMap="TradeVO">
+		<![CDATA[
+			SELECT 
+				trade_id, title, professor, contents, phone, price, nowdate, pwd, image
+			FROM 
+				trade_table
+		]]>
+	</select>
+	
+	<insert id="insertTrade" parameterType="tradeMap">
+		<![CDATA[
+			INSERT INTO trade_table
+				(title, professor, contents, phone, price, nowdate, pwd, image)
+			VALUES
+				(#{title}, #{professor}, #{contents}, #{phone}, #{price}, NOW(), #{pwd}, #{image});
+		]]>
+	</insert>
+	
+	<select id="selectTrade" resultMap="TradeVO">
+		<![CDATA[
+			SELECT 
+				trade_id, title, professor, contents, phone, price, nowdate, pwd, image
+			FROM 
+				trade_table
+			WHERE trade_id = #{trade_id};
+ 			
+		]]>
+	</select>
+	
+	<update id="updateTrade" parameterType="tradeMap">
+		<![CDATA[
+			UPDATE trade_table
+			SET
+				title = #{title},
+				professor = #{professor}, 
+				contents = #{contents},
+				phone = #{phone},
+				price = #{price},
+				nowdate = NOW(),
+				image = #{image}
+			WHERE
+				trade_id = #{tradeId};
+		]]>
+	</update>
+	
+	<update id="deleteTrade" parameterType="int">
+		<![CDATA[
+			DELETE FROM trade_table
+			WHERE
+				trade_id = #{tradeId};
+		]]>
+	</update>
+</mapper>
