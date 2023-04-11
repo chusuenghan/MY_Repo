@@ -51,8 +51,8 @@
 		</div>
 		</div>
 		<div class="wrapbox">
-		<div onclick="location.href='delivery.do'" class="box">
-			<h1>배달</h1>
+		<div onclick="location.href='traintime.do'" class="box">
+			<h1>열차</h1>
 		</div>
 		
 		<div onclick="location.href='tradeListPage.do'" class="box">

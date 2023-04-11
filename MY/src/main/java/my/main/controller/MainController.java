@@ -27,9 +27,9 @@ public class MainController {
 		return "main.jsp";
 	}
 	
-	@RequestMapping(value="/delivery.do", method = RequestMethod.GET)
-	public String deliveryPage() {
-		return "delivery.jsp";
+	@RequestMapping(value="/traintime.do", method = RequestMethod.GET)
+	public String trainPage() {
+		return "traintime.jsp";
 	}
 	
 	@RequestMapping(value="/bustime.do", method = RequestMethod.GET)
@@ -48,7 +48,7 @@ public class MainController {
 				userService.selectPwd(user.getUserId(), user.getPwd())) {
 			userService.setSession(session, user.getUserId());
 			
-			return "tradeListPage.jsp";
+			return "redirect:/tradeListPage.do";
 		} else {
 			
 			return "login.jsp";
@@ -58,6 +58,6 @@ public class MainController {
 	@RequestMapping(value="/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.removeAttribute("USER");
-		return "login.jsp";
+		return "redirect:/tradeListPage.do";
 	}
 }

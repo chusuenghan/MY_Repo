@@ -38,10 +38,4 @@ public class UserVO {
 		this.used = used;
 	}
 	
-	@Override
-	public String toString() {
-		return "UserVO [userId=" + userId + ", pwd=" + pwd + ", name=" + name + ", phone=" + phone + ", used=" + used
-				+ "]";
-	}
-	
 }

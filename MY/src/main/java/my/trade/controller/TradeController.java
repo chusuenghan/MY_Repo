@@ -80,17 +80,23 @@ public class TradeController {
 	
 	@RequestMapping("/tradeUpdate.do")
 	public String tradeUpdate(@ModelAttribute TradeVO trade) throws IOException {
-		// 파일 업로드 처리
-		String image=null;
+		TradeVO tradeOrigin = tradeService.selectTrade(trade.getTradeId());
 		MultipartFile uploadImage = trade.getUploadImage();
+		String originalFileName = null;
+		
 		if (!uploadImage.isEmpty()) {
-			String originalFileName = uploadImage.getOriginalFilename();
+			originalFileName = uploadImage.getOriginalFilename();
+		}
+		
+		if(tradeOrigin.getImage() != originalFileName) {
+			// 파일 업로드 처리
+			String image=null;
 			UUID uuid = UUID.randomUUID();	
 			image=uuid+"_"+originalFileName;	
-					
 			uploadImage.transferTo(new File("E:\\uploads\\" + image));
+
+			trade.setImage(image);
 		}
-		trade.setImage(image);
 		
 		tradeService.updateTrade(trade);
 		

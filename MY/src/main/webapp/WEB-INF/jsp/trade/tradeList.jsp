@@ -26,12 +26,18 @@
 		height:200px;
 	}
 </style>
+<script>
+	function trDblClickEvent(tradeId){
+		location.href="tradeInfoPage/"+ tradeId + ".do";
+	}
+</script>
 </head>
 <body>
 	<header>
 		<div>
 			<div style="margin: auto;">
 				<button type="button" onclick="window.location.href='main.do'">메인화면</button>
+				<button type="button" onclick="window.location.href='loginPage.do'">로그인</button>
 			</div>
 		</div>
 	</header>
@@ -39,9 +45,9 @@
 	<section>
 		<h3>게시판</h3>
 			<c:forEach items="${tradeList }" var="item">
-				<table border="1">
-					<tbody>
-					<tr ondblclick="trDblClickEvent('${item.tradeId}')">
+				<table border="1" width="600px">
+					<tbody ondblclick="trDblClickEvent('${item.tradeId}')">
+					<tr>
 						<td><c:out value="${item.tradeId }"/></td>
 						<td><c:out value="${item.title }"/></td>
 						<td><c:out value="${item.professor }"/></td>
@@ -67,9 +73,5 @@
 		
 	</section>
 </body>
-<script>
-	function trDblClickEvent(tradeId){
-		location.href="tradeInfoPage/"+ tradeId + ".do";
-	}
-</script>
+
 </html>

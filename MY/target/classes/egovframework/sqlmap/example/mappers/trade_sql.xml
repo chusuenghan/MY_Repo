@@ -4,42 +4,45 @@
 
 	<resultMap type="tradeMap" id="TradeVO">
 		<id property="tradeId" 		column="trade_id"/>
+		<result property="writerId" 	column="writer_id"/>
+		<result property="phone"   column="phone"/>
 		<result property="title" 		column="title"/>
 		<result property="professor" 	column="professor"/>
 		<result property="contents" 	column="contents"/>
-		<result property="phone" 		column="phone" />
 		<result property="price" 	column="price"/>
 		<result property="nowdate" 	column="nowdate" />
-		<result property="pwd"	column="pwd" />
 		<result property="image"     column="image"/>
 	</resultMap>
 	
 	<select id="selectTradeList" resultMap="TradeVO">
 		<![CDATA[
 			SELECT 
-				trade_id, title, professor, contents, phone, price, nowdate, pwd, image
+				trade_id, title, professor, contents, price, nowdate, image,
+				U.phone AS phone
 			FROM 
-				trade_table
+				trade_table T
+			LEFT JOIN user_table U ON (T.writer_id = U.user_id);
 		]]>
 	</select>
 	
 	<insert id="insertTrade" parameterType="tradeMap">
 		<![CDATA[
 			INSERT INTO trade_table
-				(title, professor, contents, phone, price, nowdate, pwd, image)
+				(writer_id, title, professor, contents, price, nowdate, image)
 			VALUES
-				(#{title}, #{professor}, #{contents}, #{phone}, #{price}, NOW(), #{pwd}, #{image});
+				(#{writerId}, #{title}, #{professor}, #{contents}, #{price}, NOW(), #{image});
 		]]>
 	</insert>
 	
 	<select id="selectTrade" resultMap="TradeVO">
 		<![CDATA[
 			SELECT 
-				trade_id, title, professor, contents, phone, price, nowdate, pwd, image
+				trade_id, title, professor, contents, price, nowdate, image,
+				U.phone AS phone
 			FROM 
-				trade_table
-			WHERE trade_id = #{trade_id};
- 			
+				trade_table T
+			LEFT JOIN user_table U ON (T.writer_id = U.user_id)
+ 			WHERE T.trade_id = 1;
 		]]>
 	</select>
 	
@@ -50,7 +53,6 @@
 				title = #{title},
 				professor = #{professor}, 
 				contents = #{contents},
-				phone = #{phone},
 				price = #{price},
 				nowdate = NOW(),
 				image = #{image}
@@ -59,11 +61,11 @@
 		]]>
 	</update>
 	
-	<update id="deleteTrade" parameterType="int">
+	<delete id="deleteTrade" parameterType="int">
 		<![CDATA[
 			DELETE FROM trade_table
 			WHERE
 				trade_id = #{tradeId};
 		]]>
-	</update>
+	</delete>
 </mapper>

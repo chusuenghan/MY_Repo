@@ -123,7 +123,14 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-
+		
+		<!-- springloaded -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>springloaded</artifactId>
+		    <version>1.2.8.RELEASE</version>
+		</dependency>
+		
         <!-- mysql이나 oracle DB 사용시 아래 설정 추가
         <dependency>
             <groupId>com.googlecode.log4jdbc</groupId>
@@ -180,6 +187,29 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
+		
+		<!-- json -->
+		<dependency>       
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>       
+			<version>2.4</version>       
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			 <groupId>org.codehaus.jackson</groupId>
+			 <artifactId>jackson-mapper-asl</artifactId>
+			 <version>1.9.13</version>
+		</dependency>
+		<dependency>
+			 <groupId>com.fasterxml.jackson.core</groupId>
+			 <artifactId>jackson-core</artifactId>
+			 <version>2.9.9</version>
+		</dependency> 
+		<dependency>
+			 <groupId>com.fasterxml.jackson.core</groupId>
+			 <artifactId>jackson-databind</artifactId>
+			 <version>2.9.9</version>
+		</dependency> 
 	</dependencies>
 
 	<build>

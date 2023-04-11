@@ -4,27 +4,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class TradeVO {
 	private int tradeId;
+	private String writerId;
 	private String title;
 	private String professor;
 	private String contents;
 	private String phone;
 	private String price;
 	private String nowdate;
-	private String pwd;
 	private String image;
 	private MultipartFile uploadImage;
-	
-	public MultipartFile getUploadImage() {
-		return uploadImage;
-	}
-	public void setUploadImage(MultipartFile uploadImage) {
-		this.uploadImage = uploadImage;
-	}
 	public int getTradeId() {
 		return tradeId;
 	}
 	public void setTradeId(int tradeId) {
 		this.tradeId = tradeId;
+	}
+	public String getWriterId() {
+		return writerId;
+	}
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
 	public String getTitle() {
 		return title;
@@ -62,22 +61,22 @@ public class TradeVO {
 	public void setNowdate(String nowdate) {
 		this.nowdate = nowdate;
 	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
 	}
+	public MultipartFile getUploadImage() {
+		return uploadImage;
+	}
+	public void setUploadImage(MultipartFile uploadImage) {
+		this.uploadImage = uploadImage;
+	}
 	@Override
 	public String toString() {
-		return "TradeVO [tradeId=" + tradeId + ", title=" + title + ", professor=" + professor + ", contents="
-				+ contents + ", phone=" + phone + ", price=" + price + ", nowdate=" + nowdate + ", pwd=" + pwd
-				+ ", image=" + image + "]";
+		return "TradeVO [tradeId=" + tradeId + ", writerId=" + writerId + ", title=" + title + ", professor="
+				+ professor + ", contents=" + contents + ", phone=" + phone + ", price=" + price + ", nowdate="
+				+ nowdate + ", image=" + image + "]";
 	}
 }

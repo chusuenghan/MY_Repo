@@ -6,5 +6,6 @@
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="tradeMap" type="my.trade.vo.TradeVO"/>
 		<typeAlias alias="userMap" type="my.user.vo.UserVO"/>
+		<typeAlias alias="trainMap" type="my.train.vo.TrainVO"/>
     </typeAliases>
 </configuration>
