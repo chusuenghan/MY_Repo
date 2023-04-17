@@ -37,12 +37,12 @@
 	<select id="selectTrade" resultMap="TradeVO">
 		<![CDATA[
 			SELECT 
-				trade_id, title, professor, contents, price, nowdate, image,
+				trade_id, writer_id, title, professor, contents, price, nowdate, image,
 				U.phone AS phone
 			FROM 
 				trade_table T
 			LEFT JOIN user_table U ON (T.writer_id = U.user_id)
- 			WHERE T.trade_id = 1;
+ 			WHERE T.trade_id = #{tradeId};
 		]]>
 	</select>
 	

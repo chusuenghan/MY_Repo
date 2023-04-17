@@ -10,9 +10,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,7 @@ public class trainController {
 	@Autowired
 	TrainService trainService;
 	
-	@RequestMapping(value="trainTimeList.do")
+	@RequestMapping(value="trainTimeList11.do")
 	@ResponseBody
 	public String trainTimeSelect(@RequestParam("stationName") String stationName) throws IOException {
 		
@@ -42,11 +44,10 @@ public class trainController {
         urlBuilder.append("&" + URLEncoder.encode("depPlaceId","UTF-8") + "=" + URLEncoder.encode("NAT013841", "UTF-8")); /*출발기차역ID [상세기능3. 시/도별 기차역 목록조회]에서 조회 가능*/
         urlBuilder.append("&" + URLEncoder.encode("arrPlaceId","UTF-8") + "=" + URLEncoder.encode(stationId, "UTF-8")); /*도착기차역ID [상세기능3. 시/도별 기차역 목록조회]에서 조회 가능*/
         urlBuilder.append("&" + URLEncoder.encode("depPlandTime","UTF-8") + "=" + URLEncoder.encode(nowTime, "UTF-8")); /*출발일(YYYYMMDD)*/
-        urlBuilder.append("&" + URLEncoder.encode("trainGradeCode","UTF-8") + "=" + URLEncoder.encode("00", "UTF-8")); /*차량종류코드*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Content-type", "application/xml");
         System.out.println("Response code: " + conn.getResponseCode());
         
         
@@ -59,10 +60,13 @@ public class trainController {
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = rd.readLine()) != null) {
+        	System.out.println(line);
             sb.append(line);
         }
         rd.close();
         conn.disconnect();
+        
+        System.out.println(sb.toString());
         return sb.toString();
     }
 	

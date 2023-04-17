@@ -79,15 +79,15 @@
 			</tr>
 			<tr>
 				<th>작성자</th>
+				<td><c:out value="${trade.writerId }"/></td>
+			</tr>
+			<tr>
+				<th>교수</th>
 				<td><c:out value="${trade.professor }"/></td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td><c:out value="${trade.contents }"/></td>
-			</tr>
-			<tr>
-				<th>휴대폰</th>
-				<td><c:out value="${trade.phone }"/></td>
 			</tr>
 			<tr>
 				<th>가격</th>
@@ -104,7 +104,7 @@
 		</table>
 		<br>
 		<button type="button" onclick="window.history.go(-1)">이전</button>
-		<c:if test="${board.writerId == USER.userId }">
+		<c:if test="${trade.writerId == USER.userId }">
 			<button type="button" id="updateBtn">수정</button>
 			<button type="button" id="deleteBtn">삭제</button>
 		</c:if>

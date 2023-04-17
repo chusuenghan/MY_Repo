@@ -23,20 +23,14 @@
 				<td><textarea name="contents"></textarea></td>
 			</tr>
 			<tr>
-				<th>폰번호</th>
-				<td><input type="text" name="phone"></td>
-			</tr>
-			<tr>
 				<th>가격</th>
 				<td><input type="text" name="price"></td>
 			</tr>
 			<tr>
-				<th>비밀번호</th>
-				<td><input type="text" name="pwd"></td>
-			</tr>
-			<tr>
 				<th>사진</th>
-				<td><input type="file" name="uploadImage"></td>
+				<td><input type="file" name="uploadImage">
+					<input type="hidden" value="${USER.userId }" name="writerId">
+				</td>
 			</tr>
 			
 		</table>

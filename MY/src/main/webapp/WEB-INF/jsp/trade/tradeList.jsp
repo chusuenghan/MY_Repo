@@ -14,17 +14,22 @@
 		width:80%;
 		margin:0 auto;
 	}
+	h5{
+		display:inline;
+	}
 	table{
-		margin:3px;
+		width:500px;
+		display:flex;
+	}
+	td{
+		width:166px;
+		text-align: center; 
+ 		vertical-align: middle;
 	}
 	tbody tr:hover{
 		background-color : lightyellow;
 	}
-	
-	img{
-		width:200px;
-		height:200px;
-	}
+
 </style>
 <script>
 	function trDblClickEvent(tradeId){
@@ -35,31 +40,39 @@
 <body>
 	<header>
 		<div>
-			<div style="margin: auto;">
-				<button type="button" onclick="window.location.href='main.do'">메인화면</button>
-				<button type="button" onclick="window.location.href='loginPage.do'">로그인</button>
-			</div>
+			<c:if test="${USER.name == NULL }">
+				<div style="margin: auto;">
+					<button type="button" onclick="window.location.href='main.do'">메인화면</button>
+					<button type="button" onclick="window.location.href='loginPage.do'">로그인</button>
+				</div>
+			</c:if>
+			<c:if test="${USER.name != NULL }">
+				<div style="margin: auto;">
+					<button type="button" onclick="window.location.href='main.do'">메인화면</button>
+					<h5>[${USER.name}]님</h5>
+					<button type="button" onclick="window.location.href='logout.do'">로그아웃</button>
+				</div>
+			</c:if>
 		</div>
 	</header>
 	
 	<section>
 		<h3>게시판</h3>
 			<c:forEach items="${tradeList }" var="item">
-				<table border="1" width="600px">
+				<table border="1">
 					<tbody ondblclick="trDblClickEvent('${item.tradeId}')">
 					<tr>
 						<td><c:out value="${item.tradeId }"/></td>
 						<td><c:out value="${item.title }"/></td>
 						<td><c:out value="${item.professor }"/></td>
 						<td><c:out value="${item.contents }"/></td>
-						<td><c:out value="${item.phone }"/></td>
 						<td><c:out value="${item.price }"/></td>
 						<td rowspan="2">
-							<img alt="image" src="/img/<c:out value='${item.image }'/>">
+							<img alt="image" width="100px" height="100px" src="/img/<c:out value='${item.image }'/>">
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6">
+						<td colspan="5">
 							<fmt:parseDate value="${item.nowdate }" pattern="yyyy-MM-dd HH:mm" var="registrationDate"/>
 							<fmt:formatDate value="${registrationDate }" pattern="yyyy년MM월dd일HH:mm"/>
 						</td>
@@ -68,9 +81,9 @@
 				</table>
 			</c:forEach>
 		
-		
+		<c:if test="${USER.name != NULL }">
 		<button type="button" onclick="window.location.href='tradeInsertPage.do'">게시글 등록</button>
-		
+		</c:if>
 	</section>
 </body>
 

@@ -34,7 +34,7 @@
 				</tr>
 				<tr>
 					<th>연락처</th>
-					<td><input type="text" name="phone"/></td>
+					<td><input type="text" name="phone" required="required"/></td>
 				</tr>
 			</tbody>
 		</table>

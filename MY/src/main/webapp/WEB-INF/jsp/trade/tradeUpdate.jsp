@@ -17,7 +17,7 @@
 	<title>게시글 수정</title>
 </head>
 <body>
-	<form action="boardUpdate.do" method="post">
+	<form action="tradeUpdate.do" method="post"  enctype="multipart/form-data">
 		<fieldset>
 			<legend>게시글 수정</legend>
 			<table style="width: 80%;">
@@ -47,12 +47,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th>폰번호</th>
-					<td>
-						<input type="text" value="${trade.phone }" name="phone" style="width: 100%;" required/>
-					</td>
-				</tr>
-				<tr>
 					<th>가격</th>
 					<td>
 						<input type="text" value="${trade.price }" name="price" style="width: 100%;" required/>
@@ -61,7 +55,7 @@
 				<tr>
 					<th>이미지</th>
 					<td>
-						<input type="file" value="${trade.image }" name="file" style="width: 100%;" required/>
+						<input type="file" name="uploadImage" style="width: 100%;"/>
 					</td>
 				</tr>
 			</table>
