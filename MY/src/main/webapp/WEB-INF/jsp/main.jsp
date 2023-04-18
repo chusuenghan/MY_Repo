@@ -7,22 +7,19 @@
 <title>MY Community</title>
 <style>
 	#wrapper{
-	width:80%;
+	width:100%;
 	height:800px;
- 	align-items: center;
- 	margin:0 auto;
  	
+ 	margin:0 auto;
+ 	display:flex;
+ 	flex-direction: column;
+    justify-content: center;
+    align-items: center;
 	}
-	.wrapbox{
-		width:100%;
-		height:400px;
-		text-align: center;
-		margin:0 auto;
-		align-items:center;
-		
-		}
+	
 	
 	.box{
+		
 		display:inline-block;
 		width:300px;
 		height:100px;
@@ -30,7 +27,7 @@
   		
  		align-items: center;
  		border:3px solid black;
- 		margin : 0 auto;
+ 		margin-bottom:20px;
  		
 	h1{
 		padding-top : 10px;
@@ -41,23 +38,20 @@
 </head>
 <body>
 	<div id="wrapper">
-		<div class="wrapbox">
+		
 		<div onclick="location.href='bustime.do'" class="box">
-			<h1>버스시간표</h1>
+			<h1>밀양 -> 부산대</h1>
 		</div>
 		
-		<div onclick="location.href='busroute.do'" class="box">
-			<h1>버스루트</h1>
-		</div>
-		</div>
-		<div class="wrapbox">
+		
+		
 		<div onclick="location.href='traintime.do'" class="box">
-			<h1>열차</h1>
+			<h1>부산대 -> 밀양</h1>
 		</div>
 		
 		<div onclick="location.href='tradeListPage.do'" class="box">
-			<h1>중고책</h1>
-		</div>
+			<h1>중고거래</h1>
+		
 		</div>
 	</div>
 </body>

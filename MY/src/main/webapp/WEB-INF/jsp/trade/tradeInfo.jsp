@@ -59,15 +59,16 @@
 </head>
 <body>
 	<header>
-		<div style="display: flex;">
+		<div style="margin: auto;">
+			<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/main.do'">메인화면</button>
+			<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/tradeListPage.do'">목록</button>
+		</div>
+		<div style="display: flex;align-items: center;">
 			<c:if test="${USER.name != NULL }">
-			<h5>[${USER.name}]님 반갑습니다.</h5>
+			<h5>[${USER.name}]님</h5>
+			<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/logout.do'">로그아웃</button>
 			</c:if>
-			<div style="margin: auto;">
-				<button type="button" onclick="window.location.href='main.do'">메인화면</button>
-				<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/main.do'">메인화면</button>
-				<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/logout.do'">로그아웃</button>
-			</div>
+			
 		</div>
 	</header>
 	<section>
@@ -95,11 +96,14 @@
 			</tr>
 			<tr>
 				<th>등록날짜</th>
-				<td><c:out value="${trade.nowdate }"/></td>
+				<td>
+					<fmt:parseDate value="${trade.nowdate }" pattern="yyyy-MM-dd HH:mm" var="registrationDate"/>
+					<fmt:formatDate value="${registrationDate }" pattern="yyyy년MM월dd일HH:mm"/>
+				</td>
 			</tr>
 			<tr>
 				<th>이미지</th>
-				<td><img alt="image" src="/img/<c:out value='${trade.image }'/>"></td>
+				<td><img alt="image" width="300px" height="300px" src="/img/<c:out value='${trade.image }'/>"></td>
 			</tr>
 		</table>
 		<br>

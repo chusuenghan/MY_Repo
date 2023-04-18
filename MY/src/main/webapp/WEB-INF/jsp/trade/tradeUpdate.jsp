@@ -25,7 +25,7 @@
 				<th>게시글</th>
 					<td>
 						<%-- <c:out value="${trade.writerName }"></c:out> --%>
-						<input type="hidden" value="${trade.tradeId }" name="boardId" style="width: 100%;"/>
+						<input type="hidden" value="${trade.tradeId }" name="tradeId" style="width: 100%;"/>
 					</td>
 				</tr>
 				<tr>

@@ -21,18 +21,22 @@
 		width:500px;
 		display:flex;
 	}
+	tbody{
+		border:1px solid black;
+		margin-bottom:10px;
+	}
 	td{
 		width:166px;
 		text-align: center; 
  		vertical-align: middle;
 	}
-	tbody tr:hover{
+	tbody:hover{
 		background-color : lightyellow;
 	}
 
 </style>
 <script>
-	function trDblClickEvent(tradeId){
+	function trClickEvent(tradeId){
 		location.href="tradeInfoPage/"+ tradeId + ".do";
 	}
 </script>
@@ -49,6 +53,8 @@
 			<c:if test="${USER.name != NULL }">
 				<div style="margin: auto;">
 					<button type="button" onclick="window.location.href='main.do'">메인화면</button>
+				</div>
+				<div style="margin: auto;">
 					<h5>[${USER.name}]님</h5>
 					<button type="button" onclick="window.location.href='logout.do'">로그아웃</button>
 				</div>
@@ -59,20 +65,20 @@
 	<section>
 		<h3>게시판</h3>
 			<c:forEach items="${tradeList }" var="item">
-				<table border="1">
-					<tbody ondblclick="trDblClickEvent('${item.tradeId}')">
+				<table>
+					<tbody onclick="trClickEvent('${item.tradeId}')">
 					<tr>
-						<td><c:out value="${item.tradeId }"/></td>
+						
 						<td><c:out value="${item.title }"/></td>
 						<td><c:out value="${item.professor }"/></td>
-						<td><c:out value="${item.contents }"/></td>
-						<td><c:out value="${item.price }"/></td>
+						
+						<td><c:out value="${item.price }"/>원</td>
 						<td rowspan="2">
 							<img alt="image" width="100px" height="100px" src="/img/<c:out value='${item.image }'/>">
 						</td>
 					</tr>
 					<tr>
-						<td colspan="5">
+						<td colspan="3">
 							<fmt:parseDate value="${item.nowdate }" pattern="yyyy-MM-dd HH:mm" var="registrationDate"/>
 							<fmt:formatDate value="${registrationDate }" pattern="yyyy년MM월dd일HH:mm"/>
 						</td>
