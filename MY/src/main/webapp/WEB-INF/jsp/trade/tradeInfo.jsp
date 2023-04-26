@@ -72,7 +72,8 @@
 		</div>
 	</header>
 	<section>
-		<h3>게시글 상세</h3>
+	<fieldset style="width:700px;">
+		<legend><h3>게시글 상세</h3></legend>
 		<table style="width:600px;">
 			<tr>
 				<th>제목</th>
@@ -107,11 +108,15 @@
 			</tr>
 		</table>
 		<br>
+		
+		</fieldset>
+		<div style=" margin-top:10px;">
 		<button type="button" onclick="window.history.go(-1)">이전</button>
 		<c:if test="${trade.writerId == USER.userId }">
 			<button type="button" id="updateBtn">수정</button>
 			<button type="button" id="deleteBtn">삭제</button>
 		</c:if>
+		</div>
 	</section>
 </body>
 

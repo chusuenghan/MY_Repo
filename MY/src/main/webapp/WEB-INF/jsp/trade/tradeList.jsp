@@ -51,10 +51,10 @@
 				</div>
 			</c:if>
 			<c:if test="${USER.name != NULL }">
-				<div style="margin: auto;">
+				<div style="margin: auto; margin-top:10px;">
 					<button type="button" onclick="window.location.href='main.do'">메인화면</button>
 				</div>
-				<div style="margin: auto;">
+				<div style="margin: auto; margin-top:10px;">
 					<h5>[${USER.name}]님</h5>
 					<button type="button" onclick="window.location.href='logout.do'">로그아웃</button>
 				</div>

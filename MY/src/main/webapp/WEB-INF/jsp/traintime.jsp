@@ -326,8 +326,8 @@ $('#insertStation').on('click', function(){
 		<table id="weekend"  class="timeTable" style="border:1px solid black;margin-left:auto;margin-right:auto;display:none;">
 			<tr>
 				<th>번호</th>
-				<th>밀양역</th>
 				<th>부산대</th>
+				<th>밀양역</th>
 			</tr>
 			<tr>
 				<td>1</td>
