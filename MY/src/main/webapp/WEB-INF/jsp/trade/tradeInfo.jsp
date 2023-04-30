@@ -161,7 +161,7 @@
 		       		<form>
 		            	<input type="hidden" id="parent-id-${comment.commentId}" value="${comment.commentId}">
 		                내용: <textarea id="content-${comment.commentId}" rows="5" cols="30" required></textarea><br>
-		                작성자: <input type="text" id="writer-${comment.commentId}" required><br>
+		                작성자: <input type="hidden" id="writer-${comment.commentId}" value="${USER.userId }" required><br>
 		                <button type="button" onclick="writeComment(${comment.commentId})">작성</button>
 		                <button type="button" onclick="$('.reply-form').hide();">취소</button>
 		            </form>
