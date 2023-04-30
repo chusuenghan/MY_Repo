@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Trade Board</title>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script>
 	window.onload = function(){
 		
@@ -36,7 +38,7 @@
 				return;
 			}
 		}
-	}
+	
 	
 	function post(path, params){
 		var form = document.createElement("form");
@@ -55,6 +57,33 @@
 		document.body.appendChild(form);
 		form.submit();
 	}
+	
+    function writeComment(parentId) {
+        $.ajax({
+            url: 'writeComment.do',
+            type: 'POST',
+            data: {
+                tradeId: '${trade.tradeId}',
+                parentId: parentId,
+                content: $('#content-' + parentId).val(),
+                writerId: $('#writerId-' + parentId).val()
+            },
+            success: function (response) {
+                if (response === 'success') {
+                    location.reload();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    
+    function showReplyForm(parentId) {
+        $('.reply-form').hide();
+        $('#reply-form-' + parentId).show();
+    }
+    
 </script>
 </head>
 <body>
@@ -116,6 +145,28 @@
 			<button type="button" id="updateBtn">수정</button>
 			<button type="button" id="deleteBtn">삭제</button>
 		</c:if>
+		</div>
+		<h2>댓글 작성</h2>
+		<form>
+			<input type="hidden" id="parent-id-0" value="">
+			내용: <textarea id="content" rows="5" cols="30" required></textarea><br>
+			<input type="hidden" id="writerId-0" value="${USER.userId }" required><br>
+		    <button type="button" onclick="writeComment(0)">작성</button>
+		</form>
+		<div id="comments">
+		    <tags:displayComments comments="${comments}" indent="0" />
+		
+		    <c:forEach var="comment" items="${comments}">
+		    	<div id="reply-form-${comment.id}" class="reply-form" style="display: none; margin-left: 20px;">
+		       		<form>
+		            	<input type="hidden" id="parent-id-${comment.id}" value="${comment.id}">
+		                내용: <textarea id="content-${comment.id}" rows="5" cols="30" required></textarea><br>
+		                작성자: <input type="text" id="writer-${comment.id}" required><br>
+		                <button type="button" onclick="writeComment(${comment.id})">작성</button>
+		                <button type="button" onclick="$('.reply-form').hide();">취소</button>
+		            </form>
+		        </div>
+		    </c:forEach>
 		</div>
 	</section>
 </body>
