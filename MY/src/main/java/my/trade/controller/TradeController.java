@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import my.comment.service.CommentService;
+import my.comment.vo.CommentVO;
 import my.trade.service.TradeService;
 import my.trade.vo.TradeVO;
 
@@ -24,6 +25,9 @@ public class TradeController {
 	
 	@Autowired
 	TradeService tradeService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@RequestMapping(value="/tradeInsertPage.do")//게시글 등록 페이지 이동
 	public String tradeInsertPage() {
@@ -63,7 +67,10 @@ public class TradeController {
 	public ModelAndView tradeInfoPage(@PathVariable("tradeId") int tradeId) {
 		ModelAndView mav = new ModelAndView("trade/tradeInfo.jsp");
 		TradeVO trade = tradeService.selectTrade(tradeId);
+		List<CommentVO> comments = commentService.selectCommentList(tradeId);
+		
 		mav.addObject("trade", trade);
+		mav.addObject("comments", comments);
 		
 		return mav;
 	}
