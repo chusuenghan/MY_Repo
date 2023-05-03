@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%-- <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %> --%>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 <title>Trade Board</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script>
-	window.onload = function(){
+	window.onload=function(){
 		
 		var updateBtn = document.getElementById("updateBtn");
 		
@@ -38,7 +38,10 @@
 				return;
 			}
 		}
-	
+				
+		
+		
+	};
 	
 	function post(path, params){
 		var form = document.createElement("form");
@@ -58,32 +61,103 @@
 		form.submit();
 	}
 	
-    function writeComment(parentId) {
-        $.ajax({
-            url: 'writeComment.do',
-            type: 'POST',
-            data: {
-                tradeId: '${trade.tradeId}',
-                parentId: parentId,
-                content: $('#content-' + parentId).val(),
-                writerId: $('#writerId-' + parentId).val()
-            },
-            success: function (response) {
-                if (response === 'success') {
-                    location.reload();
-                }
-            },
-            error: function (error) {
-                console.log(error);
+	
+</script>
+<script type="text/javascript">
+$(document).ready(function() {	
+	$.ajax({
+        url: '${pageContext.request.contextPath}/showComment.do',
+        type: 'GET',
+        data: {tradeId : '${trade.tradeId}'},
+        dataType:'json',
+        success: function (response) {
+            if (response) {
+            	var out;
+            	var comments = response.comments;
+            	
+            	out = recursiveComments(comments, 0);
+            	
+            	$('#comments').append(out);
             }
-        });
-    }
-    
-    function showReplyForm(parentId) {
-        $('.reply-form').hide();
-        $('#reply-form-' + parentId).show();
-    }
-    
+            else{
+            	
+            }
+        },
+        error: function (request,status,error) {
+        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
+	
+	$("body").on("click", ".writecom", function () {
+	    const commentId = $(this).val();
+	    $.ajax({
+	        url: '${pageContext.request.contextPath}/writeComment.do',
+	        type: 'POST',
+	        data: $('#commentForm-' + commentId).serialize(),
+	        dataType:'json',
+	        success: function (response) {
+	            if (response) {
+	            	var out;
+	            	var comments = response.comments;
+	            	$('.textcontent').val('');
+	            	out = recursiveComments(comments, 0);
+	            	
+	            	$('#comments').empty();
+	            	$('#comments').append(out);
+	            }
+	            else{
+	            	
+	            }
+	        },
+	        error: function (request,status,error) {
+	        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	    });
+	});
+});
+function showReplyForm(parentId) {
+    $('.reply-form').hide();
+    $('#reply-form-' + parentId).show();
+}
+
+function replyhide(){
+	$('.reply-form').val('');
+	$('.reply-form').hide();
+}
+
+function recursiveComments(comments, indent) {
+	  let output = "";
+	  let indentlength = indent;
+
+		
+	  comments.forEach(function(comment) {
+		output += '<div style="margin-left: ' + indentlength + 'px;">';
+		if (comment.parentId != 0) {
+		   output += '<p style="font-size: 20px; display:inline;">ㄴ</p>';
+		}  		    
+		output += '<p style="display:inline;">' + comment.writerId + ':' + comment.content + '';
+		output += ' <c:if test="${USER.name != NULL }"><button onclick="showReplyForm(' + comment.commentId + ')">작성</button></c:if></p>';
+		output += '<c:if test="${USER.userId != NULL }">';
+		output += '<div id="reply-form-' + comment.commentId + '" class="reply-form" style="display: none; margin-left: 20px;">';
+    	output += '<form id="commentForm-' + comment.commentId + '">';
+    	output += '<input type="hidden" id="trade-id" name="tradeId" value="${trade.tradeId }">';
+    	output += '<input type="hidden" id="parent-id-' + comment.commentId + '" name="parentId" value="' + comment.commentId + '">';
+    	output += '내용: <textarea id="content-' + comment.commentId + '" name="content" class="textcontent" rows="5" cols="30" required></textarea><br>';
+    	output += '<input type="hidden" id="writer-' + comment.commentId + '" name="writerId" value="${USER.userId }" required><br>';
+    	output += '<button type="button" class="writecom" value="' + comment.commentId + '">작성</button>';
+    	output += '<button type="button" onclick="replyhide()">취소</button>';
+    	output += '</form></div></c:if>';
+
+	    if (comment.children && comment.children.length > 0) {
+	      output += recursiveComments(comment.children, 20);
+	    }
+
+	    output += "</div>";
+	  });
+
+	  return output;
+	}
+
 </script>
 </head>
 <body>
@@ -146,28 +220,21 @@
 			<button type="button" id="deleteBtn">삭제</button>
 		</c:if>
 		</div>
+		<c:if test="${USER.userId != NULL }">
 		<h2>댓글 작성</h2>
-		<form>
-			<input type="hidden" id="parent-id-0" value="">
-			내용: <textarea id="content" rows="5" cols="30" required></textarea><br>
-			<input type="hidden" id="writerId-0" value="${USER.userId }" required><br>
-		    <button type="button" onclick="writeComment(0)">작성</button>
+		<form id="commentForm-0">
+			<input type="hidden" id="trade-id" name="tradeId" value="${trade.tradeId }">
+			<input type="hidden" id="parent-id-0" name="parentId" value="0">
+			내용: <textarea id="content-0" name="content" class="textcontent" rows="5" cols="30" required></textarea><br>
+			<input type="hidden" id="writerId-0" name="writerId" value="${USER.userId }" required><br>
+		    <button type="button" class="writecom" value="0">작성</button>
 		</form>
+		</c:if>
 		<div id="comments">
-		    <tags:displayComments comments="${comments}" indent="0" />
+			
 		
-		    <c:forEach var="comment" items="${comments}">
-		    	<div id="reply-form-${comment.commentId}" class="reply-form" style="display: none; margin-left: 20px;">
-		       		<form>
-		            	<input type="hidden" id="parent-id-${comment.commentId}" value="${comment.commentId}">
-		                내용: <textarea id="content-${comment.commentId}" rows="5" cols="30" required></textarea><br>
-		                작성자: <input type="hidden" id="writer-${comment.commentId}" value="${USER.userId }" required><br>
-		                <button type="button" onclick="writeComment(${comment.commentId})">작성</button>
-		                <button type="button" onclick="$('.reply-form').hide();">취소</button>
-		            </form>
-		        </div>
-		    </c:forEach>
 		</div>
+		
 	</section>
 </body>
 

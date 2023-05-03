@@ -6,6 +6,46 @@
 <meta charset="UTF-8">
 <title>BusRoute</title>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=uxcg7j4o6i"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<style>
+	p{
+		display:inline;
+		margin-right:5px;
+	}
+</style>
+<script>
+$(document).ready(function() {	
+	$.ajax({
+        url: '${pageContext.request.contextPath}/busgps.do',
+        type: 'GET',
+        dataType:'json',
+        success: function (response) {
+            if (response) {
+            	var bustable = $('#bustable');
+            	var bustime = response.items;
+            	
+            	bustable.empty();
+            	bustable.append('<div>hello</div>');
+            	
+            	bustime.forEach(function(item) {
+  					bustable.append(
+                        '<p>' + item.arrprevstationcnt + '</p><p>' + item.arrtime + '</p><p>' + item.nodenm + '</p><p>'
+                        + item.routeno + '</p><br>'
+                    );
+                });
+            	
+            	
+            }
+            else{
+            	alert("전송된 값 없음");
+            }
+        },
+        error: function (request,status,error) {
+        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
+});
+</script>
 <style>
 	body{
 		width:80%;
@@ -28,6 +68,7 @@
 				<td>시간</td>
 			</tr>
 		</table>
+		<div id="bustable"></div>
 	</div>
     <div id="map" style="width:50%;height:600px;margin:0 auto;"></div>
     <script>

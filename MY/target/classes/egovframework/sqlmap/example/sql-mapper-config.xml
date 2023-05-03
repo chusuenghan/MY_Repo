@@ -7,5 +7,6 @@
 		<typeAlias alias="tradeMap" type="my.trade.vo.TradeVO"/>
 		<typeAlias alias="userMap" type="my.user.vo.UserVO"/>
 		<typeAlias alias="trainMap" type="my.train.vo.TrainVO"/>
+		<typeAlias alias="commentMap" type="my.comment.vo.CommentVO"/>
     </typeAliases>
 </configuration>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,10 +70,24 @@ public class TradeController {
 		ModelAndView mav = new ModelAndView("trade/tradeInfo.jsp");
 		TradeVO trade = tradeService.selectTrade(tradeId);
 		List<CommentVO> comments = commentService.selectCommentList(tradeId);
+		String commentHtml = recursiveComments(comments, 0);
 		
 		mav.addObject("trade", trade);
-		mav.addObject("comments", comments);
 		
+		mav.addObject("commentHtml", commentHtml);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/showComment.do", method= RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView showComment(@RequestParam("tradeId") int tradeId) throws Exception {
+		
+		ModelAndView mav = new ModelAndView("jsonView");
+		List<CommentVO> comments = commentService.selectCommentList(tradeId);
+				
+		mav.addObject("comments", comments);
+		System.out.println(comments.toString());
 		return mav;
 	}
 	
@@ -121,5 +137,53 @@ public class TradeController {
 		fileDel.delete();
 		
 		return "redirect:/tradeListPage.do";
+	}
+	
+	@RequestMapping(value="/writeComment.do", method= RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView writeComment(CommentVO comment) throws Exception {
+		
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		commentService.insertComment(comment);
+		
+		List<CommentVO> comments = commentService.selectCommentList(comment.getTradeId());
+		
+		mav.addObject("comments", comments);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/replywrite.do", method= RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView replywrite(CommentVO comment) throws Exception {
+		
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		commentService.insertComment(comment);
+		
+		List<CommentVO> comments = commentService.selectCommentList(comment.getTradeId());
+		
+		mav.addObject("recomments", comments);
+		
+		return mav;
+	}
+	
+	public static String recursiveComments(List<CommentVO> comments, int indent) {
+	    StringBuilder output = new StringBuilder();
+
+	    for (CommentVO comment : comments) {
+	        output.append("<div style=\"margin-left: ").append(20 * indent).append("px;\">");
+	        output.append("<p>").append(comment.getWriterId()).append(": ").append(comment.getContent())
+	            .append(" <button onclick=\"showReplyForm(").append(comment.getCommentId()).append(")\">작성</button></p>");
+
+	        if (comment.getChildren() != null && !comment.getChildren().isEmpty()) {
+	            output.append(recursiveComments(comment.getChildren(), indent + 1));
+	        }
+
+	        output.append("</div>");
+	    }
+
+	    return output.toString();
 	}
 }

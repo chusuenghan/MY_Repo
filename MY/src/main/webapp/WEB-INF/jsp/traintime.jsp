@@ -11,8 +11,9 @@
 $(document).ready(function() {
 $('#insertStation').on('click', function(){
 	var stationName = $('#stationName').val();
+	var path = "${pageContext.request.contextPath}/trainTimeList.do";
 	$.ajax({
-		url:'trainTimeList.do',
+		url:path,
 		type:"GET",
 		data:{"stationName":stationName},
 		dataType:"json",

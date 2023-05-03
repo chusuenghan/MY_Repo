@@ -57,6 +57,7 @@ public class CommentVO {
 	@Override
 	public String toString() {
 		return "CommentVO [tradeId=" + tradeId + ", commentId=" + commentId + ", writerId=" + writerId + ", parentId="
-				+ parentId + ", content=" + content + ", nowDate=" + nowDate + "]";
+				+ parentId + ", content=" + content + ", nowDate=" + nowDate + ", children=" + children + "]";
 	}
+	
 }

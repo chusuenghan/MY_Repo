@@ -35,7 +35,7 @@ public class ApiExplorer {
 	@Autowired
 	TrainService trainService;
 	
-	@RequestMapping(value="trainTimeList.do")
+	@RequestMapping(value="/trainTimeList.do")
 	@ResponseBody
 	public ModelAndView trainTimeSelect(@RequestParam("stationName") String stationName) throws Exception {
 		
